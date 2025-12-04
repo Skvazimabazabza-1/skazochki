@@ -6,26 +6,26 @@
   <title>Новогодняя сказка — Катя и часы</title>
   <style>
     :root{
-      --bg:#0b1220; --card:#0f1724; --accent:#ffd166; --muted:#cbd5e1;
-      --glass: rgba(255,255,255,0.06);
+      --bg:#071026; --card:#0f1724; --accent:#ffd166; --muted:#cbd5e1; --glass: rgba(255,255,255,0.06);
       font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071026 0%, #07142a 60%, #091826 100%);color:var(--muted)}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071026 0%, #07142a 60%, #091826 100%);color:var(--muted);overflow:hidden}
     .stage{min-height:100%;display:flex;align-items:center;justify-content:center;padding:48px}
-    .card{width:min(820px,94%);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;box-shadow:0 10px 30px rgba(2,6,23,0.6);padding:36px;position:relative;overflow:hidden}
+    .card{width:min(920px,94%);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;box-shadow:0 10px 30px rgba(2,6,23,0.6);padding:36px;position:relative;overflow:hidden}
     h1{margin:0 0 12px 0;color:var(--accent);font-weight:700;font-size:1.8rem;letter-spacing:0.2px}
     .meta{font-size:0.9rem;color:#9fb0c8;margin-bottom:18px}
-    .story{line-height:1.65;font-size:1.05rem;color:#e6eef8;background:linear-gradient(90deg, rgba(255,255,255,0.01), transparent);padding:22px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+    .story{line-height:1.65;font-size:1.05rem;color:#e6eef8;background:linear-gradient(90deg, rgba(255,255,255,0.01), transparent);padding:22px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);position:relative;z-index:4}
     .footer{margin-top:18px;display:flex;justify-content:space-between;align-items:center}
     .btn{background:var(--accent);color:#062029;padding:10px 14px;border-radius:10px;font-weight:600;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,209,102,0.12)}
     .muted{color:#9fb0c8;font-size:0.9rem}
 
     /* Snow */
     .snow{pointer-events:none;position:absolute;inset:0;z-index:2}
-    .snow i{position:absolute;top:-10vh;left:0;width:8px;height:8px;background:linear-gradient(180deg, #fff, #e8f6ff);opacity:0.85;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.2);animation:fall linear infinite}
-    /* generate many snowflakes positions via nth-child */
-    .snow i:nth-child(1){left:5%;animation-duration:12s;animation-delay:0s;transform:scale(0.9)}
-    .snow i:nth-child(2){left:12%;animation-duration:9s;animation-delay:1s;transform:scale(0.6)}
+    .snow i{position:absolute;top:-10vh;left:0;width:8px;height:8px;background:linear-gradient(180deg, #fff, #e8f6ff);opacity:0.9;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.2);animation:fall linear infinite}
+    .snow i:nth-child(odd){filter:blur(0.2px);}
+    /* positions */
+    .snow i:nth-child(1){left:3%;animation-duration:12s;animation-delay:0s;transform:scale(0.9)}
+    .snow i:nth-child(2){left:10%;animation-duration:9s;animation-delay:1s;transform:scale(0.6)}
     .snow i:nth-child(3){left:18%;animation-duration:14s;animation-delay:2s;transform:scale(0.8)}
     .snow i:nth-child(4){left:24%;animation-duration:10s;animation-delay:0.5s;transform:scale(0.5)}
     .snow i:nth-child(5){left:30%;animation-duration:16s;animation-delay:2.5s;transform:scale(1.1)}
@@ -40,10 +40,17 @@
 
     @keyframes fall{0%{transform: translateY(-10vh) rotate(0deg)}100%{transform: translateY(120vh) rotate(360deg)}}
 
-    /* Decorative fireplace */
-    .fireplace{position:absolute;right:-120px;bottom:-40px;width:420px;height:260px;transform:rotate(-15deg);opacity:0.08;filter:blur(6px);}
+    /* Fireworks canvas sits over everything */
+    #fireworks{position:fixed;inset:0;pointer-events:none;z-index:6}
 
-    /* Responsive */
+    /* Snowdrift accumulating at bottom */
+    .drift{position:fixed;left:0;right:0;bottom:0;height:0;background:linear-gradient(180deg,#fff,#e6f0ff);border-top-left-radius:60% 20px;border-top-right-radius:60% 20px;box-shadow:0 -6px 24px rgba(0,0,0,0.25);z-index:5;transition:height 2s ease}
+    .drift::after{content:"";position:absolute;left:0;right:0;top:-14px;height:24px;background:radial-gradient(circle at 20% 40%, rgba(255,255,255,0.9) 0 10px, transparent 12px), radial-gradient(circle at 70% 40%, rgba(255,255,255,0.95) 0 10px, transparent 12px)}
+
+    .controls{position:fixed;left:12px;top:12px;z-index:7;background:rgba(2,6,23,0.6);backdrop-filter:blur(6px);padding:8px;border-radius:10px;color:var(--muted);font-size:13px}
+    .controls button{margin-left:8px}
+
+    /* Responsive tweaks */
     @media (max-width:520px){h1{font-size:1.3rem}.card{padding:20px}.story{font-size:0.98rem}}
   </style>
 </head>
@@ -55,17 +62,10 @@
         <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
       </div>
 
-      <svg class="fireplace" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <g fill="none" stroke="none">
-          <ellipse cx="300" cy="300" rx="220" ry="40" fill="#ffd166"></ellipse>
-          <path d="M200 260 C220 200 260 180 300 220 C340 180 380 200 400 260 C360 240 240 240 200 260Z" fill="#ff8c42"></path>
-        </g>
-      </svg>
-
       <h1>Новогодняя сказка — Катя и старые часы</h1>
-      <div class="meta">Короткая история для тёплого вечера. Читай медленно и представляй снег.</div>
+      <div class="meta">Короткая история для тёплого вечера. Сайт показывает падающий снег, накапливающийся сугроб и феерверки.</div>
 
-      <article class="story">
+      <article class="story" id="story">
         <p>Ночь над посёлком была мягкой, как свежевыпеченный пирог: снег укутал крыши, фонари казались растаявшими свечами, а в воздухе висел запах мандаринов и хвои. В самой маленькой избушке на краю улицы жила девочка Катя с котом Пушистиком. Катя любила смотреть на часы на старой каминной полке — часы эти достались ей от прабабушки и тикали как маленькое сердце дома.</p>
 
         <p>В последний день декабря, когда звёзды уже начали собираться в небо, часы затихли. Катя постучала по ним мягко — и изнутри послышался негромкий голос.</p>
@@ -84,7 +84,7 @@
       </article>
 
       <div class="footer">
-        <div class="muted">Сделано с теплом. Если хочешь — могу добавить анимацию, звуки или печать страницы.</div>
+        <div class="muted">Сделано с теплом. Можно настроить скорость накопления снега и частоту феерверков.</div>
         <div>
           <button class="btn" onclick="window.print();">Распечатать</button>
         </div>
@@ -92,5 +92,177 @@
 
     </div>
   </div>
+
+  <!-- fireworks canvas -->
+  <canvas id="fireworks" aria-hidden="true"></canvas>
+
+  <!-- accumulating drift -->
+  <div class="drift" id="drift" aria-hidden="true"></div>
+
+  <!-- small controls for testing -->
+  <div class="controls" id="controls">
+    Сугроб: <span id="driftH">0</span>px
+    <button onclick="resetDrift()">Сброс</button>
+    <button onclick="triggerFirework(true)">Запустить фейерверк</button>
+  </div>
+
+  <script>
+    /* --- Accumulating snowdrift --- */
+    const drift = document.getElementById('drift');
+    const driftLabel = document.getElementById('driftH');
+    let driftHeight = 0; // px
+    const driftMax = Math.min(window.innerHeight * 0.35, 140); // max height
+    const driftStep = 2; // px per tick
+    const driftIntervalMs = 15000; // every 15s increase
+
+    function updateDriftUI(){
+      drift.style.height = driftHeight + 'px';
+      driftLabel.textContent = Math.round(driftHeight);
+    }
+    function accumulateDrift(){
+      if (driftHeight < driftMax){
+        driftHeight = Math.min(driftHeight + driftStep, driftMax);
+        updateDriftUI();
+      }
+    }
+    // start accumulating over time
+    updateDriftUI();
+    const driftTimer = setInterval(accumulateDrift, driftIntervalMs);
+
+    function resetDrift(){
+      driftHeight = 0; updateDriftUI();
+    }
+
+    /* --- Fireworks --- */
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    let W = canvas.width = window.innerWidth;
+    let H = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', ()=>{ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
+
+    function rand(min,max){ return Math.random()*(max-min)+min }
+
+    class Particle{
+      constructor(x,y,dx,dy,color,size,life){
+        this.x=x;this.y=y;this.dx=dx;this.dy=dy;this.color=color;this.size=size;this.life=life;this.alpha=1;
+      }
+      update(dt){
+        this.x += this.dx*dt; this.y += this.dy*dt; this.dy += 0.0008*dt; // gravity
+        this.alpha -= 0.0025*dt;
+        if (this.alpha<0) this.alpha=0;
+      }
+      draw(ctx){
+        ctx.save(); ctx.globalAlpha=this.alpha;
+        ctx.beginPath(); ctx.fillStyle=this.color; ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); ctx.restore();
+      }
+    }
+
+    let particles = [];
+
+    function launchFirework(x, y, text){
+      // initial rising dot
+      const rocketCount = 1;
+      for (let i=0;i<rocketCount;i++){
+        const rx = x;
+        const ry = H + 20;
+        const tx = x;
+        const ty = y;
+        // simulate rise then explode
+        const riseDuration = 700 + Math.random()*400;
+        const start = performance.now();
+        const rise = (t)=>{
+          const now = performance.now();
+          const p = Math.min(1,(now-start)/riseDuration);
+          const curY = ry + (ty-ry)*p;
+          // draw a bright point during rise
+          particles.push(new Particle(tx, curY, rand(-0.02,0.02), rand(-0.06,-0.12), '#fff', 3, 1));
+          if (p<1) requestAnimationFrame(rise);
+          else explode(tx,ty,text);
+        }
+        requestAnimationFrame(rise);
+      }
+    }
+
+    function explode(x,y,text){
+      const colors = ['#ff4d4d','#ffd166','#7ae7c7','#9b5cff','#4dd0ff','#ff8c42'];
+      const count = 80 + Math.floor(Math.random()*40);
+      for (let i=0;i<count;i++){
+        const angle = Math.random()*Math.PI*2;
+        const speed = rand(0.5,3.5);
+        const dx = Math.cos(angle)*speed;
+        const dy = Math.sin(angle)*speed;
+        const color = colors[Math.floor(Math.random()*colors.length)];
+        const size = rand(1,3.5);
+        particles.push(new Particle(x,y,dx,dy,color,size,1));
+      }
+
+      // also create text particles forming the words briefly
+      if (text){
+        createTextBurst(text,x,y);
+      }
+    }
+
+    function createTextBurst(text,x,y){
+      // draw the text to an offscreen canvas, sample pixels and create particles
+      const off = document.createElement('canvas');
+      const octx = off.getContext('2d');
+      const sz = 220; off.width = sz; off.height = 80;
+      octx.fillStyle = 'white'; octx.font = 'bold 36px sans-serif'; octx.textAlign = 'center'; octx.textBaseline='middle';
+      octx.fillText(text, sz/2, sz/2);
+      const img = octx.getImageData(0,0,sz,80).data;
+      for (let py=0; py<80; py+=4){
+        for (let px=0; px<sz; px+=4){
+          const idx = (py*sz + px)*4;
+          if (img[idx+3]>128){
+            const tx = x + (px - sz/2) + rand(-6,6);
+            const ty = y + (py - 40) + rand(-6,6);
+            particles.push(new Particle(x + rand(-10,10), y + rand(-10,10), (tx-x)/8 + rand(-0.5,0.5), (ty-y)/8 + rand(-0.5,0.5), '#fff', 1.2,1));
+          }
+        }
+      }
+    }
+
+    let last = performance.now();
+    function animate(now){
+      const dt = Math.min(40, now - last);
+      last = now;
+      ctx.clearRect(0,0,W,H);
+      // translucent overlay for tail
+      ctx.fillStyle = 'rgba(6,16,32,0.25)'; ctx.fillRect(0,0,W,H);
+      // update and draw particles
+      for (let i=particles.length-1;i>=0;i--){
+        const p = particles[i];
+        p.update(dt);
+        p.draw(ctx);
+        if (p.alpha<=0.01) particles.splice(i,1);
+      }
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+
+    // trigger every 2 minutes (120000 ms). Also trigger immediately on load.
+    function triggerFirework(immediate){
+      const x = rand(W*0.2, W*0.8);
+      const y = rand(H*0.15, H*0.45);
+      launchFirework(x,y,'2026 New Year');
+      if (!immediate) console.log('Firework scheduled');
+    }
+
+    // schedule interval
+    triggerFirework(true);
+    setInterval(()=>{ triggerFirework(false); }, 120000);
+
+    // also make small random bursts occasionally for liveliness
+    setInterval(()=>{ if (Math.random()<0.35) triggerFirework(false); }, 45000);
+
+    // accessibility: allow user to pause animations with keyboard P
+    let paused=false;
+    window.addEventListener('keydown', (e)=>{ if (e.key.toLowerCase()==='p'){ paused = !paused; if(paused) { cancelAnimationFrame(animate); } else { last = performance.now(); requestAnimationFrame(animate); } } });
+
+    // expose some functions to console for tweaking
+    window._drift = {reset: resetDrift, setHeight: (h)=>{ driftHeight = Math.max(0,Math.min(driftMax,h)); updateDriftUI(); }};
+    window._fireworks = {trigger: triggerFirework};
+  </script>
 </body>
 </html>
