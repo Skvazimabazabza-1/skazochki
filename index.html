@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Новогодняя сказка — Катя и часы</title>
+  <style>
+    :root{
+      --bg:#0b1220; --card:#0f1724; --accent:#ffd166; --muted:#cbd5e1;
+      --glass: rgba(255,255,255,0.06);
+      font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071026 0%, #07142a 60%, #091826 100%);color:var(--muted)}
+    .stage{min-height:100%;display:flex;align-items:center;justify-content:center;padding:48px}
+    .card{width:min(820px,94%);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;box-shadow:0 10px 30px rgba(2,6,23,0.6);padding:36px;position:relative;overflow:hidden}
+    h1{margin:0 0 12px 0;color:var(--accent);font-weight:700;font-size:1.8rem;letter-spacing:0.2px}
+    .meta{font-size:0.9rem;color:#9fb0c8;margin-bottom:18px}
+    .story{line-height:1.65;font-size:1.05rem;color:#e6eef8;background:linear-gradient(90deg, rgba(255,255,255,0.01), transparent);padding:22px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+    .footer{margin-top:18px;display:flex;justify-content:space-between;align-items:center}
+    .btn{background:var(--accent);color:#062029;padding:10px 14px;border-radius:10px;font-weight:600;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,209,102,0.12)}
+    .muted{color:#9fb0c8;font-size:0.9rem}
+
+    /* Snow */
+    .snow{pointer-events:none;position:absolute;inset:0;z-index:2}
+    .snow i{position:absolute;top:-10vh;left:0;width:8px;height:8px;background:linear-gradient(180deg, #fff, #e8f6ff);opacity:0.85;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.2);animation:fall linear infinite}
+    /* generate many snowflakes positions via nth-child */
+    .snow i:nth-child(1){left:5%;animation-duration:12s;animation-delay:0s;transform:scale(0.9)}
+    .snow i:nth-child(2){left:12%;animation-duration:9s;animation-delay:1s;transform:scale(0.6)}
+    .snow i:nth-child(3){left:18%;animation-duration:14s;animation-delay:2s;transform:scale(0.8)}
+    .snow i:nth-child(4){left:24%;animation-duration:10s;animation-delay:0.5s;transform:scale(0.5)}
+    .snow i:nth-child(5){left:30%;animation-duration:16s;animation-delay:2.5s;transform:scale(1.1)}
+    .snow i:nth-child(6){left:36%;animation-duration:11s;animation-delay:0.2s;transform:scale(0.7)}
+    .snow i:nth-child(7){left:42%;animation-duration:13s;animation-delay:1.5s;transform:scale(0.9)}
+    .snow i:nth-child(8){left:50%;animation-duration:15s;animation-delay:0.9s;transform:scale(0.6)}
+    .snow i:nth-child(9){left:58%;animation-duration:10s;animation-delay:0.1s;transform:scale(0.8)}
+    .snow i:nth-child(10){left:66%;animation-duration:17s;animation-delay:2.2s;transform:scale(0.95)}
+    .snow i:nth-child(11){left:74%;animation-duration:12s;animation-delay:0.3s;transform:scale(0.6)}
+    .snow i:nth-child(12){left:82%;animation-duration:14s;animation-delay:1.8s;transform:scale(0.7)}
+    .snow i:nth-child(13){left:90%;animation-duration:11s;animation-delay:0.6s;transform:scale(1.0)}
+
+    @keyframes fall{0%{transform: translateY(-10vh) rotate(0deg)}100%{transform: translateY(120vh) rotate(360deg)}}
+
+    /* Decorative fireplace */
+    .fireplace{position:absolute;right:-120px;bottom:-40px;width:420px;height:260px;transform:rotate(-15deg);opacity:0.08;filter:blur(6px);}
+
+    /* Responsive */
+    @media (max-width:520px){h1{font-size:1.3rem}.card{padding:20px}.story{font-size:0.98rem}}
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="card" role="main">
+      <div class="snow" aria-hidden="true">
+        <!-- 13 snowflakes -->
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <svg class="fireplace" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g fill="none" stroke="none">
+          <ellipse cx="300" cy="300" rx="220" ry="40" fill="#ffd166"></ellipse>
+          <path d="M200 260 C220 200 260 180 300 220 C340 180 380 200 400 260 C360 240 240 240 200 260Z" fill="#ff8c42"></path>
+        </g>
+      </svg>
+
+      <h1>Новогодняя сказка — Катя и старые часы</h1>
+      <div class="meta">Короткая история для тёплого вечера. Читай медленно и представляй снег.</div>
+
+      <article class="story">
+        <p>Ночь над посёлком была мягкой, как свежевыпеченный пирог: снег укутал крыши, фонари казались растаявшими свечами, а в воздухе висел запах мандаринов и хвои. В самой маленькой избушке на краю улицы жила девочка Катя с котом Пушистиком. Катя любила смотреть на часы на старой каминной полке — часы эти достались ей от прабабушки и тикали как маленькое сердце дома.</p>
+
+        <p>В последний день декабря, когда звёзды уже начали собираться в небо, часы затихли. Катя постучала по ним мягко — и изнутри послышался негромкий голос.</p>
+
+        <p>— Однажды в год я могу исполнить одно желание, — прошептал хрипловатый голос. — Но желание должно быть честным и искренним.</p>
+
+        <p>Катя задумалась. Можно попросить тёплую шубу, чтобы Пушистик не мерз, или новые коньки для себя. Но в её голове всплыл старенький дом соседа Андрея: у него не было ни родственников, ни новогодней ёлки. И тогда девочка прошептала:</p>
+
+        <p>— Я хочу, чтобы в эту ночь никто не был один.</p>
+
+        <p>Часы на миг засветились золотым светом. Вдруг из окон соседних домов раздались голоса; кто-то позвонил в дверь Андрею и пригласил его за стол; собаки во дворе начали радостно лаять, словно приглашая на праздник; в небе пронеслась стая светящихся искорок — это были снежинки, собравшиеся в особенный танец.</p>
+
+        <p>Когда часы пробили полночь, Катя поняла: её желание сработало не только потому, что она попросила, но потому, что её желание зажгло огонёк в сердцах других. Кот Пушистик свернулся клубком у её ног, а за окном расцвёл самый тёплый в мире Новый год.</p>
+
+        <p>И если когда-нибудь ночной звон часов прошепчет тебе о желании — помни: лучше просить не для себя, а для тех, кто рядом. Тогда чудо обязательно придёт.</p>
+      </article>
+
+      <div class="footer">
+        <div class="muted">Сделано с теплом. Если хочешь — могу добавить анимацию, звуки или печать страницы.</div>
+        <div>
+          <button class="btn" onclick="window.print();">Распечатать</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
